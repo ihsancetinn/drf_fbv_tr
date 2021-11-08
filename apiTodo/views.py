@@ -26,3 +26,20 @@ def todoListCreate(request):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def toDo_list(request):
+    
+    if request.method == 'GET':
+        querset = Todo.objects.all()
+        serializer = TodoSerializer(querset, many=True)
+        return Response(serializer.data)
+        
+    elif request.method == 'POST':
+        serializer = TodoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+
+        
